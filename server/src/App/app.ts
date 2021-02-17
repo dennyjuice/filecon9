@@ -2,8 +2,14 @@ import express from 'express';
 import mongoose from 'mongoose';
 import config from 'config';
 
+import authRouter from '../routes';
+import { Routes } from '../helpers/constants';
+
 const app = express();
 const PORT = config.get('serverPort');
+
+app.use(express.json());
+app.use(Routes.AUTH, authRouter);
 
 const start = async (): Promise<void> => {
   try {
