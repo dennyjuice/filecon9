@@ -2,8 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import config from 'config';
 
-import authRouter from '../routes';
-import { Routes } from '../helpers/constants';
+import authRouter from './routes';
+import { Routes } from './helpers/constants';
 
 const app = express();
 const PORT = config.get('serverPort');
@@ -24,4 +24,4 @@ const start = async (): Promise<void> => {
   }
 };
 
-export default start;
+start();

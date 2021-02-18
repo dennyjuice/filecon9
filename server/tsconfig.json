@@ -8,6 +8,6 @@
     "outDir": "dist"
   },
   "lib": ["esnext"],
-  "include": ["src/**/*.ts", "index.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }
