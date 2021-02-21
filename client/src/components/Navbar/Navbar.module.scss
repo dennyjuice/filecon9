@@ -1,0 +1,31 @@
+.navbar {
+  position: absolute;
+  width: 100%;
+  padding: 20px 10px;
+  border-bottom: 1px solid #d9d9d9;
+  backdrop-filter: blur(5px);
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 25px;
+  margin-right: 5px;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  flex-grow: 1;
+}
+
+button {
+  text-transform: uppercase;
+}
+
+.btnSign {
+  margin-right: 5px;
+}

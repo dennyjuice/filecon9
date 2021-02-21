@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300;700&display=swap');
+
+*, *:before, *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#root {
+    font-family: 'Jura', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+#root h2 {
+    font-weight: 700;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+.center {
+    height: 100%;
+    display: grid;
+    place-items: center;
+}
