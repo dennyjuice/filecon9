@@ -20,6 +20,13 @@
   font-size: 1.25rem;
   font-weight: 700;
   flex-grow: 1;
+  & a {
+    color: inherit;
+    &:hover {
+      color: inherit;
+      filter: opacity(.8);
+    }
+  }
 }
 
 button {

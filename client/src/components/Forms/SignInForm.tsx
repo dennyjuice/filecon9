@@ -1,32 +1,20 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
+import { Form, Input, Button } from 'antd';
+import { MailOutlined, LockOutlined } from '@ant-design/icons';
 
 import styles from './Forms.module.scss';
-import { register } from '../../services';
-import { IForm } from '../../types';
 
 const SignUpForm = () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: IForm) => {
-    register(values.username, values.email, values.password);
+  const onFinish = (values: any) => {
+    console.log('Success:', values);
   };
 
   return (
     <div className="center">
-      <Form form={form} className={styles.form} name="basic" initialValues={{ privacy: true }} onFinish={onFinish}>
-        <h2>Регистрация</h2>
-
-        <Form.Item
-          name="username"
-          rules={[
-            { required: true, message: 'Пожалуйста введите никнейм!' },
-            { min: 3, message: 'Должно быть больше 3 символов' },
-          ]}
-        >
-          <Input prefix={<UserOutlined className={styles.inputIcon} />} placeholder="Введите никнейм" />
-        </Form.Item>
+      <Form form={form} className={styles.form} name="basic" onFinish={onFinish}>
+        <h2>Авторизация</h2>
 
         <Form.Item name="email" rules={[{ required: true, type: 'email', message: 'Пожалуйста введите email!' }]}>
           <Input type="email" prefix={<MailOutlined className={styles.inputIcon} />} placeholder="Введите email" />
@@ -42,10 +30,6 @@ const SignUpForm = () => {
           <Input.Password prefix={<LockOutlined className={styles.inputIcon} />} />
         </Form.Item>
 
-        <Form.Item name="privacy" valuePropName="checked">
-          <Checkbox>I agree with terms</Checkbox>
-        </Form.Item>
-
         <Form.Item shouldUpdate>
           {() => (
             <Button
@@ -53,7 +37,7 @@ const SignUpForm = () => {
               htmlType="submit"
               disabled={!!form.getFieldsError().filter(({ errors }) => errors.length).length}
             >
-              Зарегистрироваться
+              Войти
             </Button>
           )}
         </Form.Item>
