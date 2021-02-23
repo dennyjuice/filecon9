@@ -11,6 +11,7 @@ const authRouter = Router();
 authRouter.post(
   Routes.REGISTER_USER,
   [
+    check('username', 'Username should be longer than 3 characters').isLength({ min: 3 }),
     check('email', 'Incorrect email').isEmail(),
     check('password', 'Password should be longer than 3 and shorter than 12 characters').isLength({ min: 3, max: 12 }),
   ],
@@ -21,15 +22,17 @@ authRouter.post(
         return response.status(400).json({ message: 'Incorrect request', errors });
       }
 
-      const { email, password } = request.body;
-      const candidate = await User.findOne({ email });
+      const { username, email, password } = request.body;
+      const candidate = await User.findOne({ $or: [{ email }, { username }] });
 
       if (candidate) {
-        return response.status(400).json({ message: `User with email ${email} already exist!` });
+        return response
+          .status(400)
+          .json({ message: `User with email '${email}' or username '${username}' already exist!` });
       }
 
       const hashPassword = await bcrypt.hash(password, 7);
-      const user = new User({ email, password: hashPassword });
+      const user = new User({ username, email, password: hashPassword });
       await user.save();
 
       return response.json({ message: 'User was created' });

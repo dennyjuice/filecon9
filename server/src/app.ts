@@ -4,10 +4,12 @@ import config from 'config';
 
 import authRouter from './routes';
 import { Routes } from './helpers/constants';
+import corsMiddleware from './middleware/cors.middleware';
 
 const app = express();
 const PORT = config.get('serverPort');
 
+app.use(corsMiddleware);
 app.use(express.json());
 app.use(Routes.AUTH, authRouter);
 

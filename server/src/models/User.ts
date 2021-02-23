@@ -1,6 +1,7 @@
 import { Schema, model, Types, Document } from 'mongoose';
 
 interface User extends Document {
+  username: string;
   email: string;
   password: string;
   diskSpace: number;
@@ -10,6 +11,7 @@ interface User extends Document {
 }
 
 const User = new Schema<User>({
+  username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   diskSpace: { type: Number, default: 1024 ** 3 * 10 },
