@@ -1,16 +1,20 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { registerUser } from '../../redux/slices/userSlice';
 
 import styles from './Forms.module.scss';
-import { register } from '../../services';
 import { IForm } from '../../types';
 
 const SignUpForm = () => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const { successMessage, isLoading } = useTypedSelector((state) => state.user);
 
   const onFinish = (values: IForm) => {
-    register(values.username, values.email, values.password);
+    dispatch(registerUser(values));
   };
 
   return (
@@ -49,6 +53,7 @@ const SignUpForm = () => {
         <Form.Item shouldUpdate>
           {() => (
             <Button
+              loading={isLoading}
               type="primary"
               htmlType="submit"
               disabled={!!form.getFieldsError().filter(({ errors }) => errors.length).length}
@@ -58,6 +63,7 @@ const SignUpForm = () => {
           )}
         </Form.Item>
       </Form>
+      <p>{successMessage}</p>
     </div>
   );
 };
