@@ -19,7 +19,7 @@ authRouter.post(
     try {
       const errors = validationResult(request);
       if (!errors.isEmpty()) {
-        return response.status(400).json({ message: 'Incorrect request', errors });
+        return response.status(400).json({ error: 'Incorrect request', errors });
       }
 
       const { username, email, password } = request.body;
@@ -28,7 +28,7 @@ authRouter.post(
       if (candidate) {
         return response
           .status(400)
-          .json({ message: `User with email '${email}' or username '${username}' already exist!` });
+          .json({ error: `User with email '${email}' or username '${username}' already exist!` });
       }
 
       const hashPassword = await bcrypt.hash(password, 7);
@@ -38,7 +38,7 @@ authRouter.post(
       return response.json({ message: 'User was created' });
     } catch (e) {
       console.log(e);
-      response.send({ message: 'Server error' });
+      response.send({ error: 'Server error' });
     }
   },
 );
@@ -49,13 +49,13 @@ authRouter.post(Routes.LOGIN_USER, async (request, response) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return response.status(404).json({ message: 'User not found' });
+      return response.status(404).json({ error: 'User not found' });
     }
 
     const isPassValid = bcrypt.compareSync(password, user.password);
 
     if (!isPassValid) {
-      return response.status(400).json({ message: 'Invalid password' });
+      return response.status(400).json({ error: 'Invalid password' });
     }
 
     const token = jwt.sign({ id: user.id }, config.get('secretKey'), { expiresIn: '1h' });
@@ -71,7 +71,7 @@ authRouter.post(Routes.LOGIN_USER, async (request, response) => {
     });
   } catch (e) {
     console.log(e);
-    response.send({ message: 'Server error' });
+    response.send({ error: 'Server error' });
   }
 });
 

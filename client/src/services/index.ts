@@ -7,5 +7,5 @@ axios.defaults.baseURL = AXIOS_BASE_URL;
 
 export const postFetch = async (endPoint: EndPoints, body: IForm | {} = {}) => {
   const response = await axios.post(endPoint, body);
-  return response.data;
+  return response;
 };

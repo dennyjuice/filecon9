@@ -11,7 +11,7 @@ import { IForm } from '../../types';
 const SignUpForm = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const { successMessage, isLoading } = useTypedSelector((state) => state.user);
+  const { serverMessage, isLoading } = useTypedSelector((state) => state.user);
 
   const onFinish = (values: IForm) => {
     dispatch(registerUser(values));
@@ -63,7 +63,8 @@ const SignUpForm = () => {
           )}
         </Form.Item>
       </Form>
-      <p>{successMessage}</p>
+      <p>{serverMessage.message}</p>
+      <p style={{ color: 'red' }}>{serverMessage.error}</p>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 export interface IUserState {
   currentUser: any;
   isLoading: boolean;
-  successMessage: string;
+  serverMessage: any;
   isAuth: boolean;
 }
 

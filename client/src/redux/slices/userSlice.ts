@@ -6,18 +6,24 @@ import { postFetch } from '../../services';
 const initialState: IUserState = {
   currentUser: {},
   isLoading: false,
-  successMessage: '',
+  serverMessage: {},
   isAuth: false,
 };
 
-export const registerUser = createAsyncThunk('user/registerUserStatus', async (userData: IForm) => {
-  try {
-    const response = await postFetch(EndPoints.REGISTRATION, userData);
-    return response.message;
-  } catch (error) {
-    return error.response.data.message;
-  }
-});
+export const registerUser = createAsyncThunk(
+  'user/registerUserStatus',
+  async (userData: IForm, { rejectWithValue }) => {
+    try {
+      const response = await postFetch(EndPoints.REGISTRATION, userData);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
 const userSlice = createSlice({
   name: 'user',
@@ -29,11 +35,15 @@ const userSlice = createSlice({
     });
     builder.addCase(registerUser.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.successMessage = payload;
+      state.serverMessage = payload;
     });
-    builder.addCase(registerUser.rejected, (state, { error }) => {
+    builder.addCase(registerUser.rejected, (state, { payload, error }) => {
       state.isLoading = false;
-      state.successMessage = error.message;
+      if (payload) {
+        state.serverMessage = payload;
+      } else {
+        state.serverMessage = { error: error.message };
+      }
     });
   },
 });
