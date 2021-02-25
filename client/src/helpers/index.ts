@@ -6,4 +6,5 @@ export enum Routes {
 
 export enum EndPoints {
   REGISTRATION = '/auth/registration',
+  LOGIN = '/auth/login',
 }

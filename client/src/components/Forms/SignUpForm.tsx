@@ -1,20 +1,34 @@
-import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import React, { useEffect } from 'react';
+import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { registerUser } from '../../redux/slices/userSlice';
+import { authUser, clearServerMessages } from '../../redux/slices/userSlice';
 
 import styles from './Forms.module.scss';
 import { IForm } from '../../types';
+import { EndPoints } from '../../helpers';
 
 const SignUpForm = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { serverMessage, isLoading } = useTypedSelector((state) => state.user);
 
+  useEffect(() => {
+    if (serverMessage.error) {
+      message.error(serverMessage.error);
+    }
+    if (serverMessage.message) {
+      message.success(serverMessage.message);
+    }
+
+    return () => {
+      dispatch(clearServerMessages());
+    };
+  }, [dispatch, serverMessage.error, serverMessage.message]);
+
   const onFinish = (values: IForm) => {
-    dispatch(registerUser(values));
+    dispatch(authUser({ endPoint: EndPoints.REGISTRATION, userData: values }));
   };
 
   return (
@@ -63,8 +77,6 @@ const SignUpForm = () => {
           )}
         </Form.Item>
       </Form>
-      <p>{serverMessage.message}</p>
-      <p style={{ color: 'red' }}>{serverMessage.error}</p>
     </div>
   );
 };

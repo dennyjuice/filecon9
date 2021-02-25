@@ -63,6 +63,7 @@ authRouter.post(Routes.LOGIN_USER, async (request, response) => {
       token,
       user: {
         id: user.id,
+        username: user.username,
         email: user.email,
         diskSpace: user.diskSpace,
         usedSpace: user.usedSpace,

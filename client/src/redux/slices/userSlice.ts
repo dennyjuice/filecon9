@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IForm, IUserState } from '../../types';
-import { EndPoints } from '../../helpers';
+import { IParams, IUserState } from '../../types';
 import { postFetch } from '../../services';
 
 const initialState: IUserState = {
@@ -10,34 +9,50 @@ const initialState: IUserState = {
   isAuth: false,
 };
 
-export const registerUser = createAsyncThunk(
-  'user/registerUserStatus',
-  async (userData: IForm, { rejectWithValue }) => {
-    try {
-      const response = await postFetch(EndPoints.REGISTRATION, userData);
-      return response.data;
-    } catch (error) {
-      if (!error.response) {
-        throw error;
-      }
-      return rejectWithValue(error.response.data);
+export const authUser = createAsyncThunk('user/registerUserStatus', async (params: IParams, { rejectWithValue }) => {
+  try {
+    const response = await postFetch(params.endPoint, params.userData);
+    return response.data;
+  } catch (error) {
+    if (!error.response) {
+      throw error;
     }
-  },
-);
+    return rejectWithValue(error.response.data);
+  }
+});
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    clearServerMessages(state) {
+      state.serverMessage = {};
+    },
+
+    logOut(state) {
+      state.currentUser = {};
+      state.isAuth = false;
+    },
+  },
+
   extraReducers: (builder) => {
-    builder.addCase(registerUser.pending, (state) => {
+    builder.addCase(authUser.pending, (state) => {
+      state.serverMessage = {};
       state.isLoading = true;
     });
-    builder.addCase(registerUser.fulfilled, (state, { payload }) => {
+
+    builder.addCase(authUser.fulfilled, (state, { payload }) => {
       state.isLoading = false;
+      if (payload.token) {
+        localStorage.setItem('fcToken', JSON.stringify(payload.token));
+        state.currentUser = payload.user;
+        state.isAuth = true;
+        return;
+      }
       state.serverMessage = payload;
     });
-    builder.addCase(registerUser.rejected, (state, { payload, error }) => {
+
+    builder.addCase(authUser.rejected, (state, { payload, error }) => {
       state.isLoading = false;
       if (payload) {
         state.serverMessage = payload;
@@ -49,3 +64,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+export const { clearServerMessages, logOut } = userSlice.actions;
