@@ -1,16 +1,7 @@
-import { Schema, model, Types, Document } from 'mongoose';
+import { Schema, model, Types } from 'mongoose';
+import { IUser } from '../types';
 
-interface User extends Document {
-  username: string;
-  email: string;
-  password: string;
-  diskSpace: number;
-  usedSpace: number;
-  avatar?: string;
-  files: Types.ObjectId[];
-}
-
-const User = new Schema<User>({
+const User = new Schema<IUser>({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
@@ -20,4 +11,4 @@ const User = new Schema<User>({
   files: [{ type: Types.ObjectId, ref: 'File' }],
 });
 
-export default model<User>('User', User);
+export default model<IUser>('User', User);

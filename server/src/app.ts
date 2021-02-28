@@ -21,7 +21,6 @@ const start = async (): Promise<void> => {
       console.log('Server started on port ', PORT);
     });
   } catch (e) {
-    console.log(e);
     return e;
   }
 };

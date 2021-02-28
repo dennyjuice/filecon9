@@ -2,9 +2,11 @@ import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { check, validationResult } from 'express-validator';
+import authMiddleware from '../middleware/auth.middleware';
 import config from 'config';
 import User from '../models';
 import { Routes } from '../helpers/constants';
+import { IUserRequest } from '../types';
 
 const authRouter = Router();
 
@@ -37,7 +39,6 @@ authRouter.post(
 
       return response.json({ message: 'User was created' });
     } catch (e) {
-      console.log(e);
       response.send({ error: 'Server error' });
     }
   },
@@ -71,7 +72,27 @@ authRouter.post(Routes.LOGIN_USER, async (request, response) => {
       },
     });
   } catch (e) {
-    console.log(e);
+    response.send({ error: 'Server error' });
+  }
+});
+
+authRouter.get(Routes.GET_CURRENT_USER, authMiddleware, async (request: IUserRequest, response) => {
+  try {
+    const user = await User.findOne({ _id: request.user.id });
+    const token = jwt.sign({ id: user.id }, config.get('secretKey'), { expiresIn: '1h' });
+
+    return response.json({
+      token,
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        diskSpace: user.diskSpace,
+        usedSpace: user.usedSpace,
+        avatar: user.avatar,
+      },
+    });
+  } catch (e) {
     response.send({ error: 'Server error' });
   }
 });
