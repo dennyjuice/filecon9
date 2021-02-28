@@ -1,15 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IParams, IUserState } from '../../types';
-import { postFetch } from '../../services';
+import { IParams, IUser, IUserState } from '../../types';
+import { getFetch, postFetch } from '../../services';
+import { EndPoints } from '../../helpers';
 
 const initialState: IUserState = {
-  currentUser: {},
+  currentUser: {} as IUser,
   isLoading: false,
   serverMessage: {},
   isAuth: false,
 };
 
-export const authUser = createAsyncThunk('user/registerUserStatus', async (params: IParams, { rejectWithValue }) => {
+export const authUser = createAsyncThunk('user/authUserStatus', async (params: IParams, { rejectWithValue }) => {
   try {
     const response = await postFetch(params.endPoint, params.userData);
     return response.data;
@@ -18,6 +19,15 @@ export const authUser = createAsyncThunk('user/registerUserStatus', async (param
       throw error;
     }
     return rejectWithValue(error.response.data);
+  }
+});
+
+export const getCurrentUser = createAsyncThunk('user/getCurrentUserStatus', async () => {
+  try {
+    const response = await getFetch(EndPoints.GET_CURRENT_USER);
+    return response.data;
+  } catch (error) {
+    return error;
   }
 });
 
@@ -30,7 +40,7 @@ const userSlice = createSlice({
     },
 
     logOut(state) {
-      state.currentUser = {};
+      state.currentUser = {} as IUser;
       state.isAuth = false;
     },
   },
@@ -58,6 +68,19 @@ const userSlice = createSlice({
         state.serverMessage = payload;
       } else {
         state.serverMessage = { error: error.message };
+      }
+    });
+
+    builder.addCase(getCurrentUser.pending, (state) => {
+      state.serverMessage = {};
+      state.isLoading = true;
+    });
+
+    builder.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      if (payload.user) {
+        state.currentUser = payload.user;
+        state.isAuth = true;
       }
     });
   },

@@ -9,7 +9,7 @@ import { EndPoints } from '../helpers';
 const useUserForm = (endPoint: EndPoints) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const { serverMessage, isLoading } = useTypedSelector((state) => state.user);
+  const { serverMessage, isLoading, isAuth } = useTypedSelector((state) => state.user);
 
   const onFinish = (values: IForm) => {
     dispatch(authUser({ endPoint, userData: values }));
@@ -28,7 +28,7 @@ const useUserForm = (endPoint: EndPoints) => {
     };
   }, [dispatch, serverMessage.error, serverMessage.message]);
 
-  return { form, isLoading, onFinish };
+  return { form, isLoading, onFinish, isAuth };
 };
 
 export default useUserForm;

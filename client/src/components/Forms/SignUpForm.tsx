@@ -1,13 +1,18 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
+import { Redirect } from 'react-router-dom';
 import useUserForm from '../../hooks/useUserForm';
 
+import { EndPoints, Routes } from '../../helpers';
 import styles from './Forms.module.scss';
-import { EndPoints } from '../../helpers';
 
 const SignUpForm = () => {
-  const { form, isLoading, onFinish } = useUserForm(EndPoints.REGISTRATION);
+  const { form, isLoading, onFinish, isAuth } = useUserForm(EndPoints.REGISTRATION);
+
+  if (isAuth) {
+    return <Redirect to={Routes.HOME} />;
+  }
 
   return (
     <div className="center">
