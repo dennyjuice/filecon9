@@ -1,3 +1,4 @@
 import fileController from './fileController';
+import authController from './authController';
 
-export default fileController;
+export { fileController, authController };
