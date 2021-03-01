@@ -10,7 +10,7 @@ axios.interceptors.request.use(
     const token = localStorage.getItem('fcToken');
     if (token) {
       // eslint-disable-next-line no-param-reassign
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${JSON.parse(token)}`;
     }
     return config;
   },
