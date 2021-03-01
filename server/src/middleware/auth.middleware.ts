@@ -15,10 +15,11 @@ export default (req: IUserRequest, res: Response, next: () => void) => {
       return res.status(401).json({ message: 'Auth error no token' });
     }
 
-    const decoded = jwt.verify(JSON.parse(token), config.get('secretKey'));
+    const decoded = jwt.verify(token, config.get('secretKey'));
     req.user = decoded;
     next();
   } catch (error) {
+    console.log(error);
     return res.status(401).json({ message: 'Auth error unknown' });
   }
 };

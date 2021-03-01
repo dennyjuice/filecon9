@@ -3,4 +3,5 @@ export enum Routes {
   REGISTER_USER = '/registration',
   LOGIN_USER = '/login',
   GET_CURRENT_USER = '/user',
+  FILES = '/api/files',
 }

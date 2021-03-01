@@ -4,7 +4,8 @@ import jwt from 'jsonwebtoken';
 import { check, validationResult } from 'express-validator';
 import authMiddleware from '../middleware/auth.middleware';
 import config from 'config';
-import User from '../models';
+import { User, File } from '../models';
+import fileService from '../services';
 import { Routes } from '../helpers/constants';
 import { IUserRequest } from '../types';
 
@@ -37,8 +38,11 @@ authRouter.post(
       const user = new User({ username, email, password: hashPassword });
       await user.save();
 
+      await fileService.createDir(new File({ user: user.id, name: '' }));
+
       return response.json({ message: 'User was created' });
     } catch (e) {
+      console.log(e);
       response.send({ error: 'Server error' });
     }
   },
@@ -72,6 +76,7 @@ authRouter.post(Routes.LOGIN_USER, async (request, response) => {
       },
     });
   } catch (e) {
+    console.log(e);
     response.send({ error: 'Server error' });
   }
 });
@@ -93,6 +98,7 @@ authRouter.get(Routes.GET_CURRENT_USER, authMiddleware, async (request: IUserReq
       },
     });
   } catch (e) {
+    console.log(e);
     response.send({ error: 'Server error' });
   }
 });
