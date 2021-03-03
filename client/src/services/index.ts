@@ -22,7 +22,7 @@ export const postFetch = async (endPoint: EndPoints, body: IForm | {} = {}) => {
   return response;
 };
 
-export const getFetch = async (endPoint: EndPoints) => {
+export const getFetch = async (endPoint: string) => {
   const response = await axios.get(endPoint);
   return response;
 };

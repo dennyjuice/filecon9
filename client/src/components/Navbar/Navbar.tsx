@@ -13,7 +13,9 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCurrentUser());
+    if (localStorage.getItem('fcToken')) {
+      dispatch(getCurrentUser());
+    }
   }, [dispatch]);
 
   const logOutHandler = () => {

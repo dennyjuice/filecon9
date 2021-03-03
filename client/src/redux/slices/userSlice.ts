@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IParams, IUser, IUserState } from '../../types';
+import { IUserParams, IUser, IUserState } from '../../types';
 import { getFetch, postFetch } from '../../services';
 import { EndPoints } from '../../helpers';
 
@@ -10,7 +10,7 @@ const initialState: IUserState = {
   isAuth: false,
 };
 
-export const authUser = createAsyncThunk('user/authUserStatus', async (params: IParams, { rejectWithValue }) => {
+export const authUser = createAsyncThunk('user/authUserStatus', async (params: IUserParams, { rejectWithValue }) => {
   try {
     const response = await postFetch(params.endPoint, params.userData);
     return response.data;
@@ -46,43 +46,42 @@ const userSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(authUser.pending, (state) => {
-      state.serverMessage = {};
-      state.isLoading = true;
-    });
-
-    builder.addCase(authUser.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
-      if (payload.token) {
-        localStorage.setItem('fcToken', JSON.stringify(payload.token));
-        state.currentUser = payload.user;
-        state.isAuth = true;
-        return;
-      }
-      state.serverMessage = payload;
-    });
-
-    builder.addCase(authUser.rejected, (state, { payload, error }) => {
-      state.isLoading = false;
-      if (payload) {
+    builder
+      .addCase(authUser.pending, (state) => {
+        state.serverMessage = {};
+        state.isLoading = true;
+      })
+      .addCase(authUser.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        if (payload.token) {
+          localStorage.setItem('fcToken', JSON.stringify(payload.token));
+          state.currentUser = payload.user;
+          state.isAuth = true;
+          return;
+        }
         state.serverMessage = payload;
-      } else {
-        state.serverMessage = { error: error.message };
-      }
-    });
+      })
+      .addCase(authUser.rejected, (state, { payload, error }) => {
+        state.isLoading = false;
+        if (payload) {
+          state.serverMessage = payload;
+        } else {
+          state.serverMessage = { error: error.message };
+        }
+      });
 
-    builder.addCase(getCurrentUser.pending, (state) => {
-      state.serverMessage = {};
-      state.isLoading = true;
-    });
-
-    builder.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
-      if (payload.user) {
-        state.currentUser = payload.user;
-        state.isAuth = true;
-      }
-    });
+    builder
+      .addCase(getCurrentUser.pending, (state) => {
+        state.serverMessage = {};
+        state.isLoading = true;
+      })
+      .addCase(getCurrentUser.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        if (payload.user) {
+          state.currentUser = payload.user;
+          state.isAuth = true;
+        }
+      });
   },
 });
 

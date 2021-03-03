@@ -19,7 +19,24 @@ export interface IUser extends IForm {
   avatar?: string;
 }
 
-export interface IParams {
+export interface IUserParams {
   endPoint: EndPoints;
   userData: IForm;
+}
+
+export interface IFileState {
+  files: IFile[];
+  currentDir: string;
+  isLoading: boolean;
+}
+
+export interface IFile {
+  name: string;
+  type: string;
+  size: number;
+  path: string;
+  user: IUser;
+  parent?: string;
+  children: string[];
+  _id: string;
 }
