@@ -1,0 +1,34 @@
+.listItem {
+  display: grid;
+  grid-template-columns: auto 4fr repeat(4, 1fr);
+
+  &:hover {
+    background-color: #f3f3f3;
+  }
+}
+
+.icon {
+  padding-right: 10px;
+  font-size: 25px;
+  justify-self: right;
+}
+
+.name {
+  grid-column-start: 2;
+}
+
+.date {
+  grid-column-start: 5;
+  justify-self: center;
+}
+
+.size {
+  grid-column-start: 6;
+  justify-self: center;
+}
+
+.listTitle {
+  display: grid;
+  grid-template-columns: 35px 4fr repeat(4, 1fr);
+  padding: 16px 24px;
+}

@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { List } from 'antd';
 import { getFiles } from '../../redux/slices/fileSlice';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
+import File from './File';
+import styles from './File.module.scss';
 
 const FileDisk = () => {
   const { files, currentDir } = useTypedSelector((state) => state.files);
@@ -11,13 +14,15 @@ const FileDisk = () => {
     dispatch(getFiles(currentDir));
   }, [dispatch, currentDir]);
 
-  return (
-    <ul>
-      {files.map(({ _id: id, name }) => (
-        <li key={id}>{name}</li>
-      ))}
-    </ul>
+  const listTitle = (
+    <div className={styles.listTitle}>
+      <span className={styles.name}>Название</span>
+      <span className={styles.date}>Дата</span>
+      <span className={styles.size}>Размер</span>
+    </div>
   );
+
+  return <List size="large" header={listTitle} dataSource={files} renderItem={(file) => <File file={file} />} />;
 };
 
 export default FileDisk;
