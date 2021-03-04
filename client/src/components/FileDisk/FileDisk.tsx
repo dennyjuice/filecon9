@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { List } from 'antd';
+import { List, Button } from 'antd';
+import { LeftOutlined, FileAddOutlined } from '@ant-design/icons';
 import { getFiles } from '../../redux/slices/fileSlice';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import File from './File';
@@ -22,7 +23,17 @@ const FileDisk = () => {
     </div>
   );
 
-  return <List size="large" header={listTitle} dataSource={files} renderItem={(file) => <File file={file} />} />;
+  return (
+    <>
+      <div className={styles.navButtons}>
+        <Button icon={<LeftOutlined />}>Назад</Button>
+        <Button type="primary" icon={<FileAddOutlined />}>
+          Создать папку
+        </Button>
+      </div>
+      <List size="large" header={listTitle} dataSource={files} renderItem={(file) => <File file={file} />} />
+    </>
+  );
 };
 
 export default FileDisk;

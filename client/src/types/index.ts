@@ -35,6 +35,7 @@ export interface IFile {
   type: string;
   size: number;
   path: string;
+  date: Date;
   user: IUser;
   parent?: string;
   children: string[];
