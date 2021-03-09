@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { List, Button } from 'antd';
 import { LeftOutlined, FileAddOutlined } from '@ant-design/icons';
-import { getFiles } from '../../redux/slices/fileSlice';
+import { getFiles, setCurrentDir } from '../../redux/slices/fileSlice';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { AppDispatch } from '../../redux/store';
 import File from './File';
@@ -31,10 +31,18 @@ const FileDisk = () => {
     setVisible(!visible);
   };
 
+  const backClickHandler = () => {
+    dispatch(setCurrentDir(files[0].parent));
+  };
+
   return (
     <>
       <div className={styles.navButtons}>
-        <Button icon={<LeftOutlined />}>Назад</Button>
+        {currentDir && (
+          <Button icon={<LeftOutlined />} onClick={backClickHandler}>
+            Назад
+          </Button>
+        )}
         <Button type="primary" icon={<FileAddOutlined />} onClick={toggleModal}>
           Создать папку
         </Button>

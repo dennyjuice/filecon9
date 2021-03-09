@@ -36,6 +36,7 @@
 .listItem {
   display: grid;
   grid-template-columns: auto 4fr repeat(4, 1fr);
+  cursor: pointer;
 
   &:hover {
     background-color: #f3f3f3;

@@ -30,7 +30,11 @@ export const createDir = createAsyncThunk('files/createDirStatus', async ({ name
 const fileSlice = createSlice({
   name: 'files',
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentDir(state, { payload }) {
+      state.currentDir = payload;
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -63,4 +67,4 @@ const fileSlice = createSlice({
 });
 
 export default fileSlice.reducer;
-// export const {  } = fileSlice.actions;
+export const { setCurrentDir } = fileSlice.actions;
