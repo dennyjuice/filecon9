@@ -30,14 +30,17 @@ export interface IFileState {
   isLoading: boolean;
 }
 
-export interface IFile {
+export interface IFileCreate {
   name: string;
   type: string;
+  parent?: string;
+}
+
+export interface IFile extends IFileCreate {
   size: number;
   path: string;
   date: Date;
   user: IUser;
-  parent?: string;
   children: string[];
   _id: string;
 }

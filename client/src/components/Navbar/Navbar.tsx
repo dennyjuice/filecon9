@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { AppDispatch } from '../../redux/store';
 import { getCurrentUser, logOut } from '../../redux/slices/userSlice';
 import { Routes } from '../../helpers';
 import styles from './Navbar.module.scss';
@@ -10,7 +11,7 @@ import logo from '../assets/87100.svg';
 
 const Navbar = () => {
   const { isAuth, currentUser } = useTypedSelector((state) => state.user);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
     if (localStorage.getItem('fcToken')) {

@@ -25,6 +25,9 @@ export const authUser = createAsyncThunk('user/authUserStatus', async (params: I
 export const getCurrentUser = createAsyncThunk('user/getCurrentUserStatus', async () => {
   try {
     const response = await getFetch(EndPoints.GET_CURRENT_USER);
+    if (response.status === 401) {
+      localStorage.removeItem('fcToken');
+    }
     return response.data;
   } catch (error) {
     return error;
@@ -80,7 +83,9 @@ const userSlice = createSlice({
         if (payload.user) {
           state.currentUser = payload.user;
           state.isAuth = true;
+          return;
         }
+        state.currentUser = {} as IUser;
       });
   },
 });
