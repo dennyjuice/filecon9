@@ -3,6 +3,7 @@ import { Button, Form, Input, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
 import { createDir } from '../../../redux/slices/fileSlice';
 import { AppDispatch } from '../../../redux/store';
+import styles from './CreateDirModal.module.scss';
 
 const CreateDirModal = ({ currentDir, isLoading, visible, toggleModal }: any) => {
   const [form] = Form.useForm();
@@ -22,12 +23,10 @@ const CreateDirModal = ({ currentDir, isLoading, visible, toggleModal }: any) =>
           <Input type="name" placeholder="Введите название папки" />
         </Form.Item>
 
-        <Form.Item shouldUpdate>
-          {() => (
-            <Button loading={isLoading} type="primary" htmlType="submit">
-              Создать
-            </Button>
-          )}
+        <Form.Item className={styles.createButton}>
+          <Button loading={isLoading} type="primary" htmlType="submit">
+            Создать
+          </Button>
         </Form.Item>
       </Form>
     </Modal>
