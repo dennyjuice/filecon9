@@ -19,7 +19,7 @@ const CreateDirModal = ({ currentDir, isLoading, visible, toggleModal }: any) =>
   return (
     <Modal title="Создать папку" visible={visible} footer={null} onCancel={toggleModal}>
       <Form form={form} name="basic" onFinish={({ name }) => createDirHandler(currentDir, name)}>
-        <Form.Item name="name" rules={[{ required: true, min: 1, message: 'Введите название папки!' }]}>
+        <Form.Item name="name" rules={[{ required: true, message: 'Введите название папки!' }]}>
           <Input type="name" placeholder="Введите название папки" />
         </Form.Item>
 
