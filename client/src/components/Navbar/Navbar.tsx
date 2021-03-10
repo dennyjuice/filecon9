@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Button } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
@@ -12,10 +12,12 @@ import logo from '../assets/87100.svg';
 const Navbar = () => {
   const { isAuth, currentUser } = useTypedSelector((state) => state.user);
   const dispatch: AppDispatch = useDispatch();
+  const history = useHistory();
 
   const logOutHandler = () => {
     localStorage.removeItem('fcToken');
     dispatch(logOut());
+    history.push(Routes.HOME);
   };
 
   return (

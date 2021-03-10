@@ -6,7 +6,7 @@ import useUserForm from '../../hooks/useUserForm';
 import { EndPoints } from '../../helpers';
 import styles from './Forms.module.scss';
 
-const SignUpForm = () => {
+const SignInForm = () => {
   const { form, isLoading, onFinish } = useUserForm(EndPoints.LOGIN);
 
   return (
@@ -45,4 +45,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

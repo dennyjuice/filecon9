@@ -5,7 +5,18 @@ import { Routes } from '../../helpers';
 
 const PrivateRoute: React.FC<RouteProps> = ({ component: Component, ...rest }) => {
   const { isAuth } = useTypedSelector((state) => state.user);
-  return <Route {...rest} render={(props) => (isAuth ? <Component {...props} /> : <Redirect to={Routes.LOGIN} />)} />;
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isAuth ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: Routes.LOGIN, state: { from: props.location } }} />
+        )
+      }
+    />
+  );
 };
 
 export default PrivateRoute;

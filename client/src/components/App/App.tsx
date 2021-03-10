@@ -24,7 +24,6 @@ const App = () => {
 
   return (
     <Router>
-      {isAuth && <Redirect to={Routes.FILES} />}
       <Navbar />
       <main className={cn(styles.content, 'container')}>
         <Switch>
@@ -33,12 +32,12 @@ const App = () => {
             path={Routes.HOME}
             render={() => {
               if (!isAuth) {
-                return <p>Cloud storage</p>;
+                return <p>Тут будет описание</p>;
               }
-              return null;
+              return <Redirect to={Routes.FILES} />;
             }}
           />
-          <PrivateRoute exact path={Routes.FILES} component={FileDisk} />
+          <PrivateRoute path={Routes.FILES} component={FileDisk} />
 
           <Route exact path={Routes.REGISTRATION} component={SignUpForm} />
           <Route exact path={Routes.LOGIN} component={SignInForm} />
