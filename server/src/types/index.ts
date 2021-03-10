@@ -16,6 +16,11 @@ export interface IUserRequest extends Request {
   query: { parent: string };
 }
 
+export interface IFileRequest extends Request {
+  user: IUser;
+  body: { _id: string; parent: string };
+}
+
 export interface IFile extends Document {
   name: string;
   type: string;
