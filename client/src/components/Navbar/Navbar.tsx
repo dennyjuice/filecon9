@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { AppDispatch } from '../../redux/store';
-import { getCurrentUser, logOut } from '../../redux/slices/userSlice';
+import { logOut } from '../../redux/slices/userSlice';
 import { Routes } from '../../helpers';
 import styles from './Navbar.module.scss';
 import logo from '../assets/87100.svg';
@@ -12,12 +12,6 @@ import logo from '../assets/87100.svg';
 const Navbar = () => {
   const { isAuth, currentUser } = useTypedSelector((state) => state.user);
   const dispatch: AppDispatch = useDispatch();
-
-  useEffect(() => {
-    if (localStorage.getItem('fcToken')) {
-      dispatch(getCurrentUser());
-    }
-  }, [dispatch]);
 
   const logOutHandler = () => {
     localStorage.removeItem('fcToken');
@@ -28,7 +22,7 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <div className={styles.menu}>
         <div className={styles.title}>
-          <Link to={Routes.HOME}>
+          <Link to={isAuth ? Routes.FILES : Routes.HOME}>
             <img className={styles.logo} src={logo} alt="" />
             Filecon9
           </Link>
