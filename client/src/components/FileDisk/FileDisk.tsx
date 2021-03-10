@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { List, Button } from 'antd';
 import { LeftOutlined, FileAddOutlined } from '@ant-design/icons';
+import { useHistory, RouteComponentProps } from 'react-router-dom';
 import { getFiles, setCurrentDir } from '../../redux/slices/fileSlice';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { AppDispatch } from '../../redux/store';
@@ -9,13 +10,22 @@ import File from './File';
 import CreateDirModal from '../blocks/CreateDirModal';
 import styles from './File.module.scss';
 
-const FileDisk = () => {
+interface RouterProps {
+  dirId: string;
+}
+
+const FileDisk = ({ match }: RouteComponentProps<RouterProps>) => {
   const { files, currentDir, isLoading } = useTypedSelector((state) => state.files);
   const dispatch: AppDispatch = useDispatch();
+  const history = useHistory();
+
+  useLayoutEffect(() => {
+    dispatch(setCurrentDir(match.params.dirId));
+  }, [dispatch, match.params.dirId]);
 
   useEffect(() => {
     dispatch(getFiles(currentDir));
-  }, [dispatch, currentDir]);
+  }, [currentDir, dispatch]);
 
   const listTitle = (
     <div className={styles.listTitle}>
@@ -32,7 +42,7 @@ const FileDisk = () => {
   };
 
   const backClickHandler = () => {
-    dispatch(setCurrentDir(files[0].parent));
+    history.goBack();
   };
 
   return (

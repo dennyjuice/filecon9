@@ -5,7 +5,14 @@ import { createDir } from '../../../redux/slices/fileSlice';
 import { AppDispatch } from '../../../redux/store';
 import styles from './CreateDirModal.module.scss';
 
-const CreateDirModal = ({ currentDir, isLoading, visible, toggleModal }: any) => {
+interface IModalProps {
+  currentDir: string;
+  isLoading: boolean;
+  visible: boolean;
+  toggleModal: () => void;
+}
+
+const CreateDirModal: React.FC<IModalProps> = ({ currentDir, isLoading, visible, toggleModal }) => {
   const [form] = Form.useForm();
   const dispatch: AppDispatch = useDispatch();
 

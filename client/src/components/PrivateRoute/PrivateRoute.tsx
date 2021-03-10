@@ -5,6 +5,7 @@ import { Routes } from '../../helpers';
 
 const PrivateRoute: React.FC<RouteProps> = ({ component: Component, ...rest }) => {
   const { isAuth } = useTypedSelector((state) => state.user);
+
   return (
     <Route
       {...rest}

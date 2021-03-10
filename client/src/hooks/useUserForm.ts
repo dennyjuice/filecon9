@@ -8,14 +8,20 @@ import { authUser, clearServerMessages } from '../redux/slices/userSlice';
 import { IForm } from '../types';
 import { EndPoints } from '../helpers';
 
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+}
+
 const useUserForm = (endPoint: EndPoints) => {
   const [form] = Form.useForm();
   const dispatch: AppDispatch = useDispatch();
   const { serverMessage, isLoading, isAuth } = useTypedSelector((state) => state.user);
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<LocationState>();
 
-  const { from }: any = location.state || { from: { pathname: '/' } };
+  const { from } = location.state || { from: { pathname: '/' } };
 
   const onFinish = (values: IForm) => {
     dispatch(authUser({ endPoint, userData: values })).then(() => history.replace(from));
@@ -34,7 +40,7 @@ const useUserForm = (endPoint: EndPoints) => {
     };
   }, [dispatch, serverMessage.error, serverMessage.message]);
 
-  return { form, isLoading, onFinish, isAuth };
+  return { form, isLoading, onFinish, isAuth, from };
 };
 
 export default useUserForm;

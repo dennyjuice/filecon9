@@ -1,15 +1,14 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { List } from 'antd';
 import { FolderTwoTone } from '@ant-design/icons';
-import { setCurrentDir } from '../../redux/slices/fileSlice';
+import { useHistory } from 'react-router-dom';
 
-import { AppDispatch } from '../../redux/store';
 import { IFile } from '../../types';
 import styles from './File.module.scss';
+import { Routes } from '../../helpers';
 
 const File: React.FC<{ file: IFile }> = ({ file }) => {
-  const dispatch: AppDispatch = useDispatch();
+  const history = useHistory();
 
   return (
     <List.Item
@@ -17,7 +16,7 @@ const File: React.FC<{ file: IFile }> = ({ file }) => {
       onClick={() => {
         const { _id: id, type } = file;
         if (type === 'dir') {
-          dispatch(setCurrentDir(id));
+          history.push(`${Routes.FILES}/${id}`);
         }
       }}
     >

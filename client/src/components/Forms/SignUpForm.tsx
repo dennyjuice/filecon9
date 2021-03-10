@@ -4,14 +4,14 @@ import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Redirect } from 'react-router-dom';
 import useUserForm from '../../hooks/useUserForm';
 
-import { EndPoints, Routes } from '../../helpers';
+import { EndPoints } from '../../helpers';
 import styles from './Forms.module.scss';
 
 const SignUpForm = () => {
-  const { form, isLoading, onFinish, isAuth } = useUserForm(EndPoints.REGISTRATION);
+  const { form, isLoading, onFinish, isAuth, from } = useUserForm(EndPoints.REGISTRATION);
 
   if (isAuth) {
-    return <Redirect to={Routes.HOME} />;
+    return <Redirect to={from} />;
   }
 
   return (
