@@ -27,6 +27,26 @@ export const createDir = createAsyncThunk('files/createDirStatus', async ({ name
   }
 });
 
+export const uploadFiles = createAsyncThunk(
+  'files/uploadFileStatus',
+  async ({ file, parent, config }: any, { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      if (parent) {
+        formData.append('parent', parent);
+      }
+
+      const response = await postFetch(EndPoints.UPLOAD_FILE, formData, config);
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
 const fileSlice = createSlice({
   name: 'files',
   initialState,
@@ -62,6 +82,20 @@ const fileSlice = createSlice({
       })
       .addCase(createDir.rejected, (state) => {
         state.isLoading = false;
+      })
+
+      .addCase(uploadFiles.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(uploadFiles.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        if (payload) {
+          state.files.push(payload);
+        }
+      })
+      .addCase(uploadFiles.rejected, (state, { payload }: any) => {
+        state.isLoading = false;
+        throw new Error(payload.message);
       });
   },
 });

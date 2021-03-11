@@ -11,4 +11,5 @@ export enum EndPoints {
   GET_CURRENT_USER = '/auth/user',
   GET_FILES = '/files',
   CREATE_FILE = '/files',
+  UPLOAD_FILE = '/files/upload',
 }

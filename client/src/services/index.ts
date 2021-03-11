@@ -17,8 +17,8 @@ axios.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-export const postFetch = async (endPoint: EndPoints, body: IForm | {} = {}) => {
-  const response = await axios.post(endPoint, body);
+export const postFetch = async (endPoint: EndPoints, body: IForm | {} = {}, config: any = {}) => {
+  const response = await axios.post(endPoint, body, config);
   return response;
 };
 

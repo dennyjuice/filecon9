@@ -7,6 +7,7 @@ import { getFiles, setCurrentDir } from '../../redux/slices/fileSlice';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { AppDispatch } from '../../redux/store';
 import File from './File';
+import UploadButton from './UploadButton';
 import CreateDirModal from '../blocks/CreateDirModal';
 import styles from './File.module.scss';
 
@@ -56,6 +57,7 @@ const FileDisk = ({ match }: RouteComponentProps<RouterProps>) => {
         <Button type="primary" icon={<FileAddOutlined />} onClick={toggleModal}>
           Создать папку
         </Button>
+        <UploadButton currentDir={currentDir} />
       </div>
       <List size="large" header={listTitle} dataSource={files} renderItem={(file) => <File file={file} />} />
       <CreateDirModal currentDir={currentDir} isLoading={isLoading} visible={visible} toggleModal={toggleModal} />
