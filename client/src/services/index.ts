@@ -3,7 +3,7 @@ import { AXIOS_BASE_URL } from '../helpers/constants';
 import { EndPoints } from '../helpers';
 import { IForm } from '../types';
 
-axios.defaults.baseURL = AXIOS_BASE_URL;
+axios.defaults.baseURL = process.env.BASE_URL || AXIOS_BASE_URL;
 
 axios.interceptors.request.use(
   (config) => {
