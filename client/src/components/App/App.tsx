@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import cn from 'classnames';
-import { useDispatch } from 'react-redux';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { getCurrentUser } from '../../redux/slices/userSlice';
 import Navbar from '../Navbar';
 import PrivateRoute from '../PrivateRoute';
 import FileDisk from '../FileDisk';
 import { SignUpForm, SignInForm } from '../Forms';
 import { Routes } from '../../helpers';
-import { AppDispatch } from '../../redux/store';
 import styles from './App.module.scss';
 
 const DebugRouter = ({ children }: { children: any }) => {
@@ -23,8 +21,8 @@ const DebugRouter = ({ children }: { children: any }) => {
 };
 
 const App = () => {
-  const { isAuth } = useTypedSelector((state) => state.user);
-  const dispatch: AppDispatch = useDispatch();
+  const { isAuth } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (localStorage.getItem('fcToken')) {

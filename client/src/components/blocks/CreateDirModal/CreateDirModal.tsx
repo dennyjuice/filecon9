@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Form, Input, Modal } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../hooks/reduxHooks';
 import { createDir } from '../../../redux/slices/fileSlice';
-import { AppDispatch } from '../../../redux/store';
+
 import styles from './CreateDirModal.module.scss';
 
 interface IModalProps {
@@ -14,7 +14,7 @@ interface IModalProps {
 
 const CreateDirModal: React.FC<IModalProps> = ({ currentDir, isLoading, visible, toggleModal }) => {
   const [form] = Form.useForm();
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const createDirHandler = (dirId: string, name: string) => {
     dispatch(createDir({ name, type: 'dir', parent: dirId })).then(() => {

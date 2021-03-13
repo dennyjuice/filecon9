@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { Button, message, Upload, Progress } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
 
 import { uploadFiles } from '../../redux/slices/fileSlice';
-import { AppDispatch } from '../../redux/store';
 import styles from './File.module.scss';
+import { useAppDispatch } from '../../hooks/reduxHooks';
 
 type ProgressProps = 'normal' | 'success' | 'exception' | 'active';
 
 const UploadButton: React.FC<{ currentDir: string }> = ({ currentDir }) => {
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState<ProgressProps>('normal');
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const uploadFileHandler = (options: any) => {
     const { file, onSuccess, onError } = options;

@@ -1,17 +1,15 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Button } from 'antd';
-import { useDispatch } from 'react-redux';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { AppDispatch } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { logOut } from '../../redux/slices/userSlice';
 import { Routes } from '../../helpers';
 import styles from './Navbar.module.scss';
 import logo from '../assets/87100.svg';
 
 const Navbar = () => {
-  const { isAuth, currentUser } = useTypedSelector((state) => state.user);
-  const dispatch: AppDispatch = useDispatch();
+  const { isAuth, currentUser } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const history = useHistory();
 
   const logOutHandler = () => {

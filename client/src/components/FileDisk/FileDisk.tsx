@@ -1,11 +1,9 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { List, Button } from 'antd';
 import { LeftOutlined, FileAddOutlined } from '@ant-design/icons';
 import { useHistory, RouteComponentProps } from 'react-router-dom';
 import { getFiles, setCurrentDir } from '../../redux/slices/fileSlice';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { AppDispatch } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import File from './File';
 import UploadButton from './UploadButton';
 import CreateDirModal from '../blocks/CreateDirModal';
@@ -16,8 +14,8 @@ interface RouterProps {
 }
 
 const FileDisk = ({ match }: RouteComponentProps<RouterProps>) => {
-  const { files, currentDir, isLoading } = useTypedSelector((state) => state.files);
-  const dispatch: AppDispatch = useDispatch();
+  const { files, currentDir, isLoading } = useAppSelector((state) => state.files);
+  const dispatch = useAppDispatch();
   const history = useHistory();
 
   useLayoutEffect(() => {

@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Form, message } from 'antd';
-import { useTypedSelector } from './useTypedSelector';
-import { AppDispatch } from '../redux/store';
+import { useAppDispatch, useAppSelector } from './reduxHooks';
 import { authUser, clearServerMessages } from '../redux/slices/userSlice';
 import { IForm } from '../types';
 import { EndPoints } from '../helpers';
@@ -16,8 +14,8 @@ interface LocationState {
 
 const useUserForm = (endPoint: EndPoints) => {
   const [form] = Form.useForm();
-  const dispatch: AppDispatch = useDispatch();
-  const { serverMessage, isLoading, isAuth } = useTypedSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const { serverMessage, isLoading, isAuth } = useAppSelector((state) => state.user);
   const history = useHistory();
   const location = useLocation<LocationState>();
 
