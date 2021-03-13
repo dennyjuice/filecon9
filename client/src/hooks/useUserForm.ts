@@ -24,7 +24,9 @@ const useUserForm = (endPoint: EndPoints) => {
   const { from } = location.state || { from: { pathname: '/' } };
 
   const onFinish = (values: IForm) => {
-    dispatch(authUser({ endPoint, userData: values })).then(() => history.replace(from));
+    dispatch(authUser({ endPoint, userData: { ...values, email: values.email.toLowerCase() } })).then(() =>
+      history.replace(from),
+    );
   };
 
   useEffect(() => {

@@ -19,8 +19,11 @@
 .title {
   font-size: 1.25rem;
   font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
   flex-grow: 1;
   & a {
+    display: flex;
     color: inherit;
     &:hover {
       color: inherit;

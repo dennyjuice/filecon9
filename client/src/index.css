@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300;700&display=swap');
-
 *, *:before, *:after {
     margin: 0;
     padding: 0;
@@ -7,8 +5,7 @@
 }
 
 #root {
-    font-family: 'Jura', sans-serif;
-    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
     font-size: 14px;
 }
 
