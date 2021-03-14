@@ -1,11 +1,3 @@
-.navButtons {
-  padding: 0 24px;
-  display: flex;
-  button {
-    margin-right: 10px;
-  }
-}
-
 :global(.ant-list) {
   display: flex;
   flex-direction: column;
@@ -34,39 +26,63 @@
   }
 }
 
-.listItem {
-  display: grid;
-  grid-template-columns: auto 4fr repeat(4, 1fr);
-
-  &:hover {
-    background-color: #f3f3f3;
+.filesContainer {
+  position: relative;
+  height: 90%;
+  .navButtons {
+    padding: 0 24px;
+    display: flex;
+    button {
+      margin-right: 10px;
+    }
   }
-}
 
-.icon {
-  padding-right: 10px;
-  font-size: 25px;
-  justify-self: right;
-  cursor: pointer;
-}
+  .listItem {
+    display: grid;
+    grid-template-columns: auto 4fr repeat(4, 1fr);
 
-.name {
-  grid-column-start: 2;
-  cursor: pointer;
-}
+    &:hover {
+      background-color: #f3f3f3;
+    }
+  }
 
-.date {
-  grid-column-start: 5;
-  justify-self: center;
-}
+  .icon {
+    padding-right: 10px;
+    font-size: 25px;
+    justify-self: right;
+    cursor: pointer;
+  }
 
-.size {
-  grid-column-start: 6;
-  justify-self: center;
-}
+  .name {
+    grid-column-start: 2;
+    cursor: pointer;
+  }
 
-.listTitle {
-  display: grid;
-  grid-template-columns: 35px 4fr repeat(4, 1fr);
-  padding: 16px 24px;
+  .date {
+    grid-column-start: 5;
+    justify-self: center;
+  }
+
+  .size {
+    grid-column-start: 6;
+    justify-self: center;
+  }
+
+  .listTitle {
+    display: grid;
+    grid-template-columns: 35px 4fr repeat(4, 1fr);
+    padding: 16px 24px;
+  }
+
+  & > .dragWrapper {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    backdrop-filter: blur(2px);
+    z-index: 100;
+    & .dragger {
+      opacity: .7;
+    }
+  }
 }

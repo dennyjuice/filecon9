@@ -1,9 +1,10 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { List, Button } from 'antd';
-import { LeftOutlined, FileAddOutlined } from '@ant-design/icons';
+import { List, Button, Progress, Upload } from 'antd';
+import { LeftOutlined, FileAddOutlined, InboxOutlined } from '@ant-design/icons';
 import { useHistory, RouteComponentProps } from 'react-router-dom';
 import { getFiles, setCurrentDir } from '../../redux/slices/fileSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import useUpload from '../../hooks/useUpload';
 import File from './File';
 import UploadButton from './UploadButton';
 import CreateDirModal from '../blocks/CreateDirModal';
@@ -15,6 +16,8 @@ interface RouterProps {
 
 const FileDisk = ({ match }: RouteComponentProps<RouterProps>) => {
   const { files, currentDir, isLoading } = useAppSelector((state) => state.files);
+  const { uploadOptions, progress, status, isOverDrop, dropHandlers } = useUpload();
+
   const dispatch = useAppDispatch();
   const history = useHistory();
 
@@ -45,7 +48,7 @@ const FileDisk = ({ match }: RouteComponentProps<RouterProps>) => {
   };
 
   return (
-    <>
+    <div {...dropHandlers} className={styles.filesContainer}>
       <div className={styles.navButtons}>
         {currentDir && (
           <Button icon={<LeftOutlined />} onClick={backClickHandler}>
@@ -55,11 +58,25 @@ const FileDisk = ({ match }: RouteComponentProps<RouterProps>) => {
         <Button type="primary" icon={<FileAddOutlined />} onClick={toggleModal}>
           Создать папку
         </Button>
-        <UploadButton currentDir={currentDir} />
+        <UploadButton uploadOptions={uploadOptions} />
+        {progress !== 0 && <Progress type="circle" percent={progress} width={32} status={status} />}
       </div>
+
       <List size="large" header={listTitle} dataSource={files} renderItem={(file) => <File file={file} />} />
+
+      {isOverDrop && (
+        <div className={styles.dragWrapper}>
+          <Upload.Dragger {...uploadOptions} className={styles.dragger}>
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">Перетащите файлы в эту область чтобы загрузить</p>
+          </Upload.Dragger>
+        </div>
+      )}
+
       <CreateDirModal currentDir={currentDir} isLoading={isLoading} visible={visible} toggleModal={toggleModal} />
-    </>
+    </div>
   );
 };
 
