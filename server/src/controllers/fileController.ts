@@ -59,11 +59,9 @@ class FileController {
         ? path.resolve(config.get('pathFiles'), user._id.toString(), parent.path, file.name)
         : path.resolve(config.get('pathFiles'), user._id.toString(), file.name);
 
-      fs.access(pathFile, (error) => {
-        if (error) {
-          return res.status(400).json({ message: 'File already exist' });
-        }
-      });
+      if (fs.existsSync(pathFile)) {
+        return res.status(400).json({ message: 'File already exist' });
+      }
 
       await file.mv(pathFile);
 
