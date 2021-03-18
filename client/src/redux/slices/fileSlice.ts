@@ -27,6 +27,11 @@ export const createDir = createAsyncThunk('files/createDirStatus', async ({ name
   }
 });
 
+export const downloadFile = async (id: string) => {
+  const response = await getFetch(`${EndPoints.DOWNLOAD_FILE}?id=${id}`, { responseType: 'blob' });
+  return response.data;
+};
+
 export const uploadFiles = createAsyncThunk(
   'files/uploadFileStatus',
   async ({ file, parent, config }: any, { rejectWithValue }) => {

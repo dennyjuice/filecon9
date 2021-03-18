@@ -13,7 +13,7 @@ export interface IUser extends Document {
 
 export interface IUserRequest extends Request {
   user: IUser;
-  query: { parent: string };
+  query: Record<string, string>;
 }
 
 export interface IFileRequest extends Request {

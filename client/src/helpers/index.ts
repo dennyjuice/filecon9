@@ -12,4 +12,5 @@ export enum EndPoints {
   GET_FILES = '/files',
   CREATE_FILE = '/files',
   UPLOAD_FILE = '/files/upload',
+  DOWNLOAD_FILE = '/files/download',
 }

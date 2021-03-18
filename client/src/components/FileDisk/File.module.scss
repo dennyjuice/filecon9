@@ -39,10 +39,15 @@
 
   .listItem {
     display: grid;
-    grid-template-columns: auto 4fr repeat(4, 1fr);
+    grid-template-columns: auto 4fr repeat(2, .5fr) repeat(2, 1fr);
 
     &:hover {
       background-color: #f3f3f3;
+
+      & .downloadBtn,
+      & .deleteBtn {
+        display: block;
+      }
     }
   }
 
@@ -56,6 +61,21 @@
   .name {
     grid-column-start: 2;
     cursor: pointer;
+  }
+
+  .downloadBtn, .deleteBtn {
+    display: none;
+  }
+
+  .downloadBtn {
+    margin-right: 5px;
+    grid-column-start: 3;
+    justify-self: right;
+  }
+
+  .deleteBtn {
+    grid-column-start: 4;
+    justify-self: left;
   }
 
   .date {
