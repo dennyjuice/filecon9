@@ -25,3 +25,5 @@
 - [ ] User avatar
 
 - [ ] Animation
+
+- [ ] Refactor
