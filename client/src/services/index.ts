@@ -37,3 +37,8 @@ export const getFetch = async (endPoint: string, config: Record<string, string> 
   const response = await axios.get(endPoint, config);
   return response;
 };
+
+export const deleteFetch = async (endPoint: string) => {
+  const response = await axios.delete(endPoint);
+  return response;
+};

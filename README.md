@@ -12,18 +12,22 @@
 
 - [x] Drag n drop uploading
 
+- [x] Downloading files
+
+- [x] Deleting files
+
 ## TODO
-
-- [ ] Downloading files
-
-- [ ] Deleting files
 
 - [ ] Sort files
 
 - [ ] Different views list
+
+- [ ] Errors Handling
 
 - [ ] User avatar
 
 - [ ] Animation
 
 - [ ] Refactor
+
+- [ ] Rewrite backend on NestJS

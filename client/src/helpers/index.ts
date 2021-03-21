@@ -9,8 +9,7 @@ export enum EndPoints {
   REGISTRATION = '/auth/registration',
   LOGIN = '/auth/login',
   GET_CURRENT_USER = '/auth/user',
-  GET_FILES = '/files',
-  CREATE_FILE = '/files',
+  FILES_DIR = '/files',
   UPLOAD_FILE = '/files/upload',
   DOWNLOAD_FILE = '/files/download',
 }

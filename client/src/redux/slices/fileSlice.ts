@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IFileState, IFileCreate } from '../../types';
-import { getFetch, postFetch } from '../../services';
+import { deleteFetch, getFetch, postFetch } from '../../services';
 import { EndPoints } from '../../helpers';
 
 const initialState: IFileState = {
@@ -11,7 +11,7 @@ const initialState: IFileState = {
 
 export const getFiles = createAsyncThunk('files/getFilesStatus', async (params: string) => {
   try {
-    const response = await getFetch(`${EndPoints.GET_FILES}${params ? `?parent=${params}` : ''}`);
+    const response = await getFetch(`${EndPoints.FILES_DIR}${params ? `?parent=${params}` : ''}`);
     return response.data;
   } catch (error) {
     return error;
@@ -20,7 +20,16 @@ export const getFiles = createAsyncThunk('files/getFilesStatus', async (params: 
 
 export const createDir = createAsyncThunk('files/createDirStatus', async ({ name, parent, type }: IFileCreate) => {
   try {
-    const response = await postFetch(EndPoints.CREATE_FILE, parent ? { name, type, parent } : { name, type });
+    const response = await postFetch(EndPoints.FILES_DIR, parent ? { name, type, parent } : { name, type });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const deleteFile = createAsyncThunk('files/deleteFileStatus', async (id: string) => {
+  try {
+    const response = await deleteFetch(`${EndPoints.FILES_DIR}/?id=${id}`);
     return response.data;
   } catch (error) {
     return error;
@@ -58,6 +67,10 @@ const fileSlice = createSlice({
   reducers: {
     setCurrentDir(state, { payload }) {
       state.currentDir = payload;
+    },
+    deleteFileAction(state, { payload }) {
+      // eslint-disable-next-line no-underscore-dangle
+      state.files = state.files.filter((file) => file._id !== payload);
     },
   },
 
@@ -101,9 +114,16 @@ const fileSlice = createSlice({
       .addCase(uploadFiles.rejected, (state, { payload }: any) => {
         state.isLoading = false;
         throw new Error(payload.message);
+      })
+
+      .addCase(deleteFile.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteFile.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });
 
 export default fileSlice.reducer;
-export const { setCurrentDir } = fileSlice.actions;
+export const { setCurrentDir, deleteFileAction } = fileSlice.actions;

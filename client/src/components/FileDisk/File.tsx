@@ -2,13 +2,15 @@ import React from 'react';
 import { List, Button, message } from 'antd';
 import { FolderTwoTone, FileTwoTone, DownloadOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/reduxHooks';
 import { IFile } from '../../types';
 import styles from './File.module.scss';
 import { Routes } from '../../helpers';
-import { downloadFile } from '../../redux/slices/fileSlice';
+import { downloadFile, deleteFileAction, deleteFile } from '../../redux/slices/fileSlice';
 
 const File: React.FC<{ file: IFile }> = ({ file }) => {
   const history = useHistory();
+  const dispatch = useAppDispatch();
 
   const downloadFileHandler = async () => {
     const { _id: id } = file;
@@ -25,6 +27,13 @@ const File: React.FC<{ file: IFile }> = ({ file }) => {
     }
   };
 
+  const deleteFileHandler = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    const { _id: id } = file;
+
+    dispatch(deleteFile(id)).then(() => dispatch(deleteFileAction(id)));
+  };
+
   return (
     <List.Item
       className={styles.listItem}
@@ -38,18 +47,24 @@ const File: React.FC<{ file: IFile }> = ({ file }) => {
       {file.type === 'dir' ? <FolderTwoTone className={styles.icon} /> : <FileTwoTone className={styles.icon} />}
       <span className={styles.name}>{file.name}</span>
       {file.type !== 'dir' && (
-        <>
-          <Button
-            type="primary"
-            shape="round"
-            icon={<DownloadOutlined />}
-            size="small"
-            className={styles.downloadBtn}
-            onClick={downloadFileHandler}
-          />
-          <Button danger shape="round" icon={<DeleteOutlined />} size="small" className={styles.deleteBtn} />
-        </>
+        <Button
+          type="primary"
+          shape="round"
+          icon={<DownloadOutlined />}
+          size="small"
+          className={styles.downloadBtn}
+          onClick={downloadFileHandler}
+        />
       )}
+      <Button
+        danger
+        shape="round"
+        icon={<DeleteOutlined />}
+        size="small"
+        className={styles.deleteBtn}
+        onClick={(event) => deleteFileHandler(event)}
+      />
+
       <span className={styles.date}>{file.date?.toString().slice(0, 10)}</span>
       <span className={styles.size}>{file.type !== 'dir' && file.size}</span>
     </List.Item>
