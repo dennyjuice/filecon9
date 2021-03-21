@@ -9,6 +9,6 @@ fileRouter.post('', authMiddleware, fileController.createDir);
 fileRouter.post(Routes.FILE_UPLOAD, authMiddleware, fileController.uploadFile);
 fileRouter.get('', authMiddleware, fileController.getFiles);
 fileRouter.get(Routes.FILE_DOWNLOAD, authMiddleware, fileController.downloadFile);
-fileRouter.get('/', authMiddleware, fileController.deleteFile);
+fileRouter.delete('/', authMiddleware, fileController.deleteFile);
 
 export default fileRouter;

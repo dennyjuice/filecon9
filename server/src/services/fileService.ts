@@ -21,7 +21,7 @@ class FileService {
     if (file.type === 'dir') {
       fs.rmdirSync(filePath);
     } else {
-      fs.unlinkSync(filePath);
+      fs.unlinkSync(path.resolve(filePath, file.name));
     }
   }
 
