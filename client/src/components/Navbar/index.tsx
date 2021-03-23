@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Button } from 'antd';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { logOut } from '../../redux/slices/userSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { logOut } from '../../features/User/userSlice';
 import { Routes } from '../../helpers';
-import styles from './Navbar.module.scss';
-import logo from '../assets/87100.svg';
+import styles from './styles.module.scss';
+import logo from '../../assets/87100.svg';
 
 const Navbar = () => {
   const { isAuth, currentUser } = useAppSelector((state) => state.user);

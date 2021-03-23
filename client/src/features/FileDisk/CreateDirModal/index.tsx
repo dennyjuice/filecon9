@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Form, Input, Modal } from 'antd';
-import { useAppDispatch } from '../../../hooks/reduxHooks';
-import { createDir } from '../../../redux/slices/fileSlice';
+import { useAppDispatch } from '../../../hooks';
+import { createDir } from '../fileSlice';
 
-import styles from './CreateDirModal.module.scss';
+import styles from './styles.module.scss';
 
 interface IModalProps {
   currentDir: string;

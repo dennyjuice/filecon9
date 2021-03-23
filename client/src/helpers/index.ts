@@ -1,10 +1,3 @@
-export enum Routes {
-  HOME = '/',
-  FILES = '/files',
-  LOGIN = '/login',
-  REGISTRATION = '/registration',
-}
-
 export enum EndPoints {
   REGISTRATION = '/auth/registration',
   LOGIN = '/auth/login',
@@ -12,4 +5,11 @@ export enum EndPoints {
   FILES_DIR = '/files',
   UPLOAD_FILE = '/files/upload',
   DOWNLOAD_FILE = '/files/download',
+}
+
+export enum Routes {
+  HOME = '/',
+  FILES = '/files',
+  LOGIN = '/login',
+  REGISTRATION = '/registration',
 }

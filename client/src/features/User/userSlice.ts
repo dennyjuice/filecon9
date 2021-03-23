@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IUserParams, IUser, IUserState } from '../../types';
-import { getFetch, postFetch } from '../../services';
+import { getFetch, IForm, postFetch } from '../../services';
 import { EndPoints } from '../../helpers';
 
 const initialState: IUserState = {
@@ -92,3 +91,21 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 export const { clearServerMessages, logOut } = userSlice.actions;
+
+export interface IUserState {
+  currentUser: IUser;
+  isLoading: boolean;
+  serverMessage: { error?: string; message?: string };
+  isAuth: boolean;
+}
+
+export interface IUser extends IForm {
+  diskSpace: number;
+  usedSpace: number;
+  avatar?: string;
+}
+
+export interface IUserParams {
+  endPoint: EndPoints;
+  userData: IForm;
+}

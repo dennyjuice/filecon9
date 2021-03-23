@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Form, message } from 'antd';
-import { useAppDispatch, useAppSelector } from './reduxHooks';
-import { authUser, clearServerMessages } from '../redux/slices/userSlice';
-import { IForm } from '../types';
-import { EndPoints } from '../helpers';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { authUser, clearServerMessages } from '../userSlice';
+import { EndPoints } from '../../../helpers';
+import { IForm } from '../../../services';
 
 interface LocationState {
   from: {

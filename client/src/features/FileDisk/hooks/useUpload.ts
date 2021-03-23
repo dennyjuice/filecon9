@@ -1,7 +1,7 @@
 import { DragEventHandler, useMemo, useRef, useState } from 'react';
 import { message } from 'antd';
-import { useAppDispatch, useAppSelector } from './reduxHooks';
-import { uploadFiles } from '../redux/slices/fileSlice';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { uploadFiles } from '../fileSlice';
 
 type ProgressProps = 'normal' | 'success' | 'exception' | 'active';
 

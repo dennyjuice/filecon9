@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import cn from 'classnames';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { getCurrentUser } from '../../redux/slices/userSlice';
-import Navbar from '../Navbar';
-import PrivateRoute from '../PrivateRoute';
-import FileDisk from '../FileDisk';
-import { SignUpForm, SignInForm } from '../Forms';
-import { Routes } from '../../helpers';
-import styles from './App.module.scss';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { getCurrentUser } from '../features/User/userSlice';
+import Navbar from '../components/Navbar';
+import PrivateRoute from '../components/PrivateRoute';
+import FileDisk from '../features/FileDisk';
+import RegisterForm from '../features/User/RegisterForm/RegisterForm';
+import AuthForm from '../features/User/AuthForm/AuthForm';
+import styles from './styles.module.scss';
+import { Routes } from '../helpers';
 
 const DebugRouter = ({ children }: { children: any }) => {
   const { location } = useHistory();
@@ -48,8 +49,8 @@ const App = () => {
             />
             <PrivateRoute exact path={[Routes.FILES, `${Routes.FILES}/:dirId`]} component={FileDisk} />
 
-            <Route exact path={Routes.REGISTRATION} component={SignUpForm} />
-            <Route exact path={Routes.LOGIN} component={SignInForm} />
+            <Route exact path={Routes.REGISTRATION} component={RegisterForm} />
+            <Route exact path={Routes.LOGIN} component={AuthForm} />
           </Switch>
         </DebugRouter>
       </main>

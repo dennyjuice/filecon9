@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import userReducer from './userSlice';
-import fileReducer from './fileSlice';
+import userReducer from '../features/User/userSlice';
+import fileReducer from '../features/FileDisk/fileSlice';
 
 const rootReducer = combineReducers({
   user: userReducer,

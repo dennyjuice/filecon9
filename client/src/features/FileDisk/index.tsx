@@ -2,13 +2,13 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { List, Button, Progress, Upload } from 'antd';
 import { LeftOutlined, FileAddOutlined, InboxOutlined } from '@ant-design/icons';
 import { useHistory, RouteComponentProps } from 'react-router-dom';
-import { getFiles, setCurrentDir } from '../../redux/slices/fileSlice';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import useUpload from '../../hooks/useUpload';
+import { getFiles, setCurrentDir } from './fileSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import useUpload from './hooks/useUpload';
 import File from './File';
-import UploadButton from './UploadButton';
-import CreateDirModal from '../blocks/CreateDirModal';
-import styles from './File.module.scss';
+import UploadButton from '../../components/UploadButton';
+import CreateDirModal from './CreateDirModal';
+import styles from './styles.module.scss';
 
 interface RouterProps {
   dirId: string;

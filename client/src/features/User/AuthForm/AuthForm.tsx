@@ -2,12 +2,12 @@ import React from 'react';
 import { Form, Input, Button } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Redirect } from 'react-router-dom';
-import useUserForm from '../../hooks/useUserForm';
+import useUserForm from '../hooks/useUserForm';
 
-import { EndPoints } from '../../helpers';
-import styles from './Forms.module.scss';
+import { EndPoints } from '../../../helpers';
+import styles from '../styles.module.scss';
 
-const SignInForm = () => {
+const AuthForm = () => {
   const { form, isLoading, onFinish, isAuth, from } = useUserForm(EndPoints.LOGIN);
 
   if (isAuth) {
@@ -50,4 +50,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default AuthForm;

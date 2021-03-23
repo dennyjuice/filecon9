@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IFileState, IFileCreate } from '../../types';
 import { deleteFetch, getFetch, postFetch } from '../../services';
 import { EndPoints } from '../../helpers';
+import { IUser } from '../User/userSlice';
 
 const initialState: IFileState = {
   files: [],
@@ -127,3 +127,24 @@ const fileSlice = createSlice({
 
 export default fileSlice.reducer;
 export const { setCurrentDir, deleteFileAction } = fileSlice.actions;
+
+export interface IFileState {
+  files: IFile[];
+  currentDir: string;
+  isLoading: boolean;
+}
+
+export interface IFileCreate {
+  name: string;
+  type: string;
+  parent?: string;
+}
+
+export interface IFile extends IFileCreate {
+  size: number;
+  path: string;
+  date: Date;
+  user: IUser;
+  children: string[];
+  _id: string;
+}

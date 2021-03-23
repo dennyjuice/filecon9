@@ -2,11 +2,10 @@ import React from 'react';
 import { List, Button, message } from 'antd';
 import { FolderTwoTone, FileTwoTone, DownloadOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/reduxHooks';
-import { IFile } from '../../types';
-import styles from './File.module.scss';
-import { Routes } from '../../helpers';
-import { downloadFile, deleteFileAction, deleteFile } from '../../redux/slices/fileSlice';
+import { useAppDispatch } from '../../../hooks';
+import styles from '../styles.module.scss';
+import { Routes } from '../../../helpers';
+import { downloadFile, deleteFileAction, deleteFile, IFile } from '../fileSlice';
 
 const File: React.FC<{ file: IFile }> = ({ file }) => {
   const history = useHistory();

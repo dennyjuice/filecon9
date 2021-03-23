@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/reduxHooks';
+import { useAppSelector } from '../../hooks';
 import { Routes } from '../../helpers';
 
 const PrivateRoute: React.FC<RouteProps> = ({ component: Component, ...rest }) => {

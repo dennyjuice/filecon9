@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { AXIOS_BASE_URL } from '../helpers/constants';
 import { EndPoints } from '../helpers';
-import { IForm } from '../types';
+
+const AXIOS_BASE_URL = 'http://localhost:5000/api';
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL || AXIOS_BASE_URL;
 
@@ -42,3 +42,9 @@ export const deleteFetch = async (endPoint: string) => {
   const response = await axios.delete(endPoint);
   return response;
 };
+
+export interface IForm {
+  username?: string;
+  email: string;
+  password: string;
+}
