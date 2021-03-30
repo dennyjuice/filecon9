@@ -3,7 +3,7 @@ import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { Routes } from '../../helpers';
 
-const PrivateRoute: React.FC<RouteProps> = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ component: Component, ...rest }: RouteProps) => {
   const { isAuth } = useAppSelector((state) => state.user);
 
   return (
