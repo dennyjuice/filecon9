@@ -1,48 +1,19 @@
-import { DragEventHandler, useMemo, useRef, useState } from 'react';
-import { message } from 'antd';
+import React, { useState } from 'react';
+import { message, Progress } from 'antd';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { uploadFiles } from '../fileSlice';
+import UploadButton from '../../../components/UploadButton';
 
 type ProgressProps = 'normal' | 'success' | 'exception' | 'active';
 
-interface DropHandlers {
-  onDragEnter: DragEventHandler;
-  onDragLeave: DragEventHandler;
-}
-
-const useUpload = () => {
+const ButtonUploader = () => {
   const { currentDir } = useAppSelector((state) => state.files);
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState<ProgressProps>('normal');
-  const [isOverDrop, setIsOverDrop] = useState(false);
   const dispatch = useAppDispatch();
-
-  const counter = useRef(0);
-
-  const dropHandlers: DropHandlers = useMemo(
-    () => ({
-      onDragEnter(event) {
-        event.preventDefault();
-        // eslint-disable-next-line no-plusplus
-        counter.current++;
-        setIsOverDrop(true);
-      },
-      onDragLeave(event) {
-        event.preventDefault();
-        // eslint-disable-next-line no-plusplus
-        counter.current--;
-        if (counter.current === 0) {
-          setIsOverDrop(false);
-        }
-      },
-    }),
-    [],
-  );
 
   const uploadFileHandler = (options: any) => {
     const { file, onSuccess, onError } = options;
-    setIsOverDrop(false);
-    counter.current = 0;
 
     const config = {
       headers: { 'content-type': 'multipart/form-data' },
@@ -83,7 +54,12 @@ const useUpload = () => {
     multiple: true,
   };
 
-  return { uploadOptions, progress, status, isOverDrop, dropHandlers };
+  return (
+    <>
+      <UploadButton uploadOptions={uploadOptions} />
+      {progress !== 0 && <Progress type="circle" percent={progress} width={32} status={status} />}
+    </>
+  );
 };
 
-export default useUpload;
+export default ButtonUploader;
