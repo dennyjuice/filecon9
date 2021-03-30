@@ -31,3 +31,5 @@
 - [ ] Refactor
 
 - [ ] Rewrite backend on NestJS
+
+- [ ] Use AWS Cloud Storage
