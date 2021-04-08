@@ -2,10 +2,13 @@ import React from 'react';
 import { List, Button, message } from 'antd';
 import { FolderTwoTone, FileTwoTone, DownloadOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+import { format } from 'date-fns';
+import ru from 'date-fns/locale/ru';
 import { useAppDispatch } from '../../../hooks';
 import styles from '../styles.module.scss';
 import { Routes } from '../../../helpers';
 import { downloadFile, deleteFileAction, deleteFile, IFile } from '../fileSlice';
+import { sizeFormat } from '../../../utils';
 
 const File: React.FC<{ file: IFile }> = ({ file }) => {
   const history = useHistory();
@@ -64,8 +67,8 @@ const File: React.FC<{ file: IFile }> = ({ file }) => {
         onClick={(event) => deleteFileHandler(event)}
       />
 
-      <span className={styles.date}>{file.date?.toString().slice(0, 10)}</span>
-      <span className={styles.size}>{file.type !== 'dir' && file.size}</span>
+      <span className={styles.date}>{format(new Date(file.date), 'dd MMMM y', { locale: ru })}</span>
+      <span className={styles.size}>{file.type !== 'dir' && sizeFormat(file.size)}</span>
     </List.Item>
   );
 };
