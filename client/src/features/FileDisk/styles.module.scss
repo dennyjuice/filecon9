@@ -92,6 +92,9 @@
     display: grid;
     grid-template-columns: 35px 4fr repeat(4, 1fr);
     padding: 16px 24px;
+    & span {
+      cursor: pointer;
+    }
   }
 
   & > .dragWrapper {

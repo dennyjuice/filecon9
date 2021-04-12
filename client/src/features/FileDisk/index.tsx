@@ -1,8 +1,8 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { List, Button, Progress, Upload } from 'antd';
 import { LeftOutlined, FileAddOutlined, InboxOutlined } from '@ant-design/icons';
 import { useHistory, RouteComponentProps } from 'react-router-dom';
-import { getFiles, setCurrentDir } from './fileSlice';
+import { getFiles, setCurrentDir, sortByName, sortBySize, sortByDate } from './fileSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import useUpload from './hooks/useUpload';
 import File from './File';
@@ -26,15 +26,26 @@ const FileDisk = ({ match }: RouteComponentProps<RouterProps>) => {
   }, [dispatch, match.params.dirId]);
 
   useEffect(() => {
-    dispatch(getFiles(currentDir));
+    dispatch(getFiles(currentDir)).then(() => {
+      dispatch(sortByName());
+    });
   }, [currentDir, dispatch]);
 
-  const listTitle = (
-    <div className={styles.listTitle}>
-      <span className={styles.name}>Название</span>
-      <span className={styles.date}>Дата</span>
-      <span className={styles.size}>Размер</span>
-    </div>
+  const listTitle = useMemo(
+    () => (
+      <div className={styles.listTitle}>
+        <span role="presentation" className={styles.name} onClick={() => dispatch(sortByName())}>
+          Название
+        </span>
+        <span role="presentation" className={styles.date} onClick={() => dispatch(sortByDate())}>
+          Дата
+        </span>
+        <span role="presentation" className={styles.size} onClick={() => dispatch(sortBySize())}>
+          Размер
+        </span>
+      </div>
+    ),
+    [dispatch],
   );
 
   const [visible, setVisible] = useState(false);

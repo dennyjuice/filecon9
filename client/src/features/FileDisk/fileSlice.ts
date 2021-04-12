@@ -65,6 +65,19 @@ const fileSlice = createSlice({
   name: 'files',
   initialState,
   reducers: {
+    sortByName(state) {
+      state.files.sort((prev, next) => {
+        if (prev.name < next.name) return -1;
+        if (prev.name > next.name) return 1;
+        return 0;
+      });
+    },
+    sortByDate(state) {
+      state.files.sort((prev, next) => new Date(prev.date).getTime() - new Date(next.date).getTime());
+    },
+    sortBySize(state) {
+      state.files.sort((prev, next) => prev.size - next.size);
+    },
     setCurrentDir(state, { payload }) {
       state.currentDir = payload;
     },
@@ -126,7 +139,7 @@ const fileSlice = createSlice({
 });
 
 export default fileSlice.reducer;
-export const { setCurrentDir, deleteFileAction } = fileSlice.actions;
+export const { setCurrentDir, deleteFileAction, sortByName, sortByDate, sortBySize } = fileSlice.actions;
 
 export interface IFileState {
   files: IFile[];
