@@ -10,7 +10,11 @@ import { Routes } from '../../../helpers';
 import { downloadFile, deleteFileAction, deleteFile, IFile } from '../fileSlice';
 import { sizeFormat } from '../../../utils';
 
-const File: React.FC<{ file: IFile }> = ({ file }) => {
+interface FileProps {
+  file: IFile;
+}
+
+const File = ({ file }: FileProps) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
 

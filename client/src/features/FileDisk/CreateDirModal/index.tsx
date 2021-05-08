@@ -5,14 +5,14 @@ import { createDir } from '../fileSlice';
 
 import styles from './styles.module.scss';
 
-interface IModalProps {
+interface ModalProps {
   currentDir: string;
   isLoading: boolean;
   visible: boolean;
   toggleModal: () => void;
 }
 
-const CreateDirModal: React.FC<IModalProps> = ({ currentDir, isLoading, visible, toggleModal }) => {
+const CreateDirModal = ({ currentDir, isLoading, visible, toggleModal }: ModalProps) => {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
 
