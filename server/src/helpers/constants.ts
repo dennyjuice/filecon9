@@ -6,4 +6,5 @@ export enum Routes {
   FILES = '/api/files',
   FILE_UPLOAD = '/upload',
   FILE_DOWNLOAD = '/download',
+  FILE_SEARCH = '/search',
 }
