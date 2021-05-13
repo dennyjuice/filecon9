@@ -6,6 +6,7 @@ import { logOut } from '../../features/User/userSlice';
 import { Routes } from '../../helpers';
 import styles from './styles.module.scss';
 import logo from '../../assets/87100.svg';
+import SearchFiles from '../../features/FileDisk/Search';
 
 const Navbar = () => {
   const { isAuth, currentUser } = useAppSelector((state) => state.user);
@@ -42,6 +43,7 @@ const Navbar = () => {
 
         {isAuth && (
           <>
+            <SearchFiles className={styles.searchInput} />
             <span>{currentUser.username}</span>
             <Button onClick={logOutHandler}>Выйти</Button>
           </>

@@ -21,7 +21,7 @@
   font-weight: 700;
   font-style: italic;
   text-transform: uppercase;
-  flex-grow: 1;
+
   & a {
     display: flex;
     color: inherit;
@@ -30,6 +30,12 @@
       filter: opacity(.8);
     }
   }
+}
+
+.searchInput {
+  flex-grow: 1;
+  margin: 0 auto 0 20px;
+  max-width: 400px;
 }
 
 button {

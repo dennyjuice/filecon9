@@ -18,6 +18,15 @@ export const getFiles = createAsyncThunk('files/getFilesStatus', async (params: 
   }
 });
 
+export const searchFiles = createAsyncThunk('files/searchFilesStatus', async (params: string) => {
+  try {
+    const response = await getFetch(`${EndPoints.FILES_DIR}/search?search=${params}`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+});
+
 export const createDir = createAsyncThunk('files/createDirStatus', async ({ name, parent, type }: IFileCreate) => {
   try {
     const response = await postFetch(EndPoints.FILES_DIR, parent ? { name, type, parent } : { name, type });
@@ -99,6 +108,19 @@ const fileSlice = createSlice({
         }
       })
       .addCase(getFiles.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      .addCase(searchFiles.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(searchFiles.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        if (payload) {
+          state.files = payload;
+        }
+      })
+      .addCase(searchFiles.rejected, (state) => {
         state.isLoading = false;
       })
 
