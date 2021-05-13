@@ -18,9 +18,11 @@ front - [here](https://filecon9.vercel.app/), but server is not yet deployed
 
 - [x] Deleting files
 
-## TODO
+- [x] Sort files
 
-- [ ] Sort files
+- [x] Searching Files
+
+## TODO
 
 - [ ] Different views list
 
