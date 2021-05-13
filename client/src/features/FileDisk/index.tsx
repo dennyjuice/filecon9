@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
-import { List, Button, Progress, Upload } from 'antd';
+import { List, Button, Progress, Upload, Spin } from 'antd';
 import { LeftOutlined, FileAddOutlined, InboxOutlined } from '@ant-design/icons';
 import { useHistory, RouteComponentProps } from 'react-router-dom';
 import { getFiles, setCurrentDir, sortByName, sortBySize, sortByDate } from './fileSlice';
@@ -73,7 +73,11 @@ const FileDisk = ({ match }: RouteComponentProps<RouterProps>) => {
         {progress !== 0 && <Progress type="circle" percent={progress} width={32} status={status} />}
       </div>
 
-      <List size="large" header={listTitle} dataSource={files} renderItem={(file) => <File file={file} />} />
+      {isLoading ? (
+        <Spin className={styles.spinner} />
+      ) : (
+        <List size="large" header={listTitle} dataSource={files} renderItem={(file) => <File file={file} />} />
+      )}
 
       {isOverDrop && (
         <div className={styles.dragWrapper}>

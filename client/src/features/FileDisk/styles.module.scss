@@ -26,6 +26,12 @@
   }
 }
 
+.spinner {
+  display: grid;
+  place-content: center;
+  height: 100%;
+}
+
 .filesContainer {
   position: relative;
   height: 90%;
